@@ -3,8 +3,11 @@
 import Web.Scotty
 
 import Data.Monoid (mconcat)
+import System.Environment (getArgs)
 
-main = scotty 3000 $ do
-  get "/:word" $ do
-    beam <- param "word"
-    html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]
+main = do
+    port <- fmap (read . head) getArgs
+    scotty port $ do
+        get "/:word" $ do
+            beam <- param "word"
+            html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]
